@@ -1,0 +1,19 @@
+{
+  "name": "fractionalOperator",
+  "version": "0.1.0",
+  "description": "Perform operations between 2 fractions.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Katie Khuu",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "jest": "^23.6.0"
+  }
+}
