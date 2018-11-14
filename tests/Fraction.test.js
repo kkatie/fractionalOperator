@@ -58,4 +58,46 @@ describe('Add', () => {
 		var result = Fraction.performOperation(fraction1, fraction2, '+');
 	  expect(result.toString()).toBe('6_1/6');
 	});
+
+	test('Add: 2_3/8 + 9/8', () => {
+		var fraction1 = new Fraction(2, 3, 8);
+		var fraction2 = new Fraction(0, 9, 8);
+		var result = Fraction.performOperation(fraction1, fraction2, '+');
+	  expect(result.toString()).toBe('3_1/2');
+	});
 });
+
+
+describe('Subtract', () => {
+	test('Subtract with same denominator', () => {
+	var fraction1 = new Fraction(1, 7, 10);
+	var fraction2 = new Fraction(1, 5, 10);
+	var result = Fraction.performOperation(fraction1, fraction2, '-');
+  expect(result.toString()).toBe('1/5');
+});
+
+	test('Subtract with different denominator', () => {
+		var fraction1 = new Fraction(2, 5, 2);
+		var fraction2 = new Fraction(1, 5, 3);
+		var result = Fraction.performOperation(fraction1, fraction2, '-');
+	  expect(result.toString()).toBe('1_5/6');
+	});
+
+	test('Subtract with negative results', () => {
+		var fraction1 = new Fraction(2, 5, 3);
+		var fraction2 = new Fraction(1, 5, 2);
+		var result = Fraction.performOperation(fraction1, fraction2, '-');
+	  expect(result.toString()).toBe('1_-5/6');
+	});
+});
+
+
+
+
+
+
+
+
+
+
+

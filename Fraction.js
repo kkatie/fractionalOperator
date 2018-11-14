@@ -37,7 +37,10 @@ class Fraction {
     }
     if (this.numerator === 0 || this.numerator === this.denominator) {
       return `${this.wholeNumber}`;
-    } else {
+    } else if (this.wholeNumber === 0) {
+      return `${this.numerator}/${this.denominator}`;
+    }
+    else {
       return `${this.wholeNumber}_${this.numerator}/${this.denominator}`;
     }
   }
@@ -73,13 +76,13 @@ class Fraction {
         debugger;
         return this.add(fraction1, fraction2);
         break;
-      case '+':
+      case '-':
         return this.subtract(fraction1, fraction2);
         break;
-      case '+':
+      case '*':
         return this.multiply(fraction1, fraction2);
         break;
-      case '+':
+      case '/':
         return this.divide(fraction1, fraction2);
         break;
       default:
@@ -88,25 +91,39 @@ class Fraction {
   }
 
   static add(fraction1, fraction2) {
+    this.getCommonDenominator(fraction1, fraction2);
+    var wholeNumber = fraction1.getWholeNumber() + fraction2.getWholeNumber(),
+      numerator = fraction1.getNumerator() + fraction2.getNumerator(),
+      denominator = fraction1.getDenominator();
+    return new Fraction(wholeNumber, numerator, denominator);
+
+  }
+  
+  static subtract(fraction1, fraction2) {
+    this.getCommonDenominator(fraction1, fraction2);
+    var wholeNumber = fraction1.getWholeNumber() - fraction2.getWholeNumber(),
+      numerator = fraction1.getNumerator() - fraction2.getNumerator(),
+      denominator = fraction1.getDenominator();
+    return new Fraction(wholeNumber, numerator, denominator);
+  }
+
+  static multiply(fraction1, fraction2) {
+    fraction1 = Fraction.toImproperFraction(fraction1);
+    fraction2 = Fraction.toImproperFraction(fraction2);
+    var numerator = fraction1.getNumerator() * fraction2.getNumerator(),
+      denominator = fraction1.getDenominator() * fraction2.getDenominator();
+    return new Fraction();
+  }
+
+  // static divide(fraction1, fraction2) {}
+
+  static getCommonDenominator(fraction1, fraction2) {
     if (fraction1.getDenominator() !== fraction2.getDenominator()) {
       fraction1.setNumerator(fraction1.getNumerator() * fraction2.getDenominator());
       fraction2.setNumerator(fraction2.getNumerator() * fraction1.getDenominator());
       fraction1.setDenominator(fraction1.getDenominator() * fraction2.getDenominator());
     }
-    var wholeNumber = fraction1.getWholeNumber() + fraction2.getWholeNumber();
-    var numerator = fraction1.getNumerator() + fraction2.getNumerator();
-    var denominator = fraction1.getDenominator();
-    return new Fraction(wholeNumber, numerator, denominator);
-
   }
-  
-  // static subtract(fraction1, fraction2) {}
-
-  // static multiply(fraction1, fraction2) {}
-
-  // static divide(fraction1, fraction2) {}
-
-  // static findCommonDenominator(fraction1, fraction2) {}
 
   // static toImproperFraction(fraction) {}
 

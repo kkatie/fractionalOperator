@@ -1,4 +1,4 @@
-const Fraction = require('Fraction');
+const Fraction = require('./Fraction.js');
 
 // parse operand string and return a Fraction object
 function convertOperandToFraction(operandString) {
