@@ -1,4 +1,4 @@
-import Fraction from 'Fraction';
+const Fraction = require('Fraction');
 
 // parse operand string and return a Fraction object
 function convertOperandToFraction(operandString) {

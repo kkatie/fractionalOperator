@@ -1,13 +1,41 @@
-export class Fraction {
-  // to-do: value/type check?
+class Fraction {
+  // to-do: value/type check; error-handling
   constructor(wholeNumber, numerator, denominator) {
     this.wholeNumber = wholeNumber || 0;
-    this.numerator = numerator || 1;
-    this.denominator = denominator || 1;
+    this.numerator = numerator || 0;
+    this.denominator = denominator || 0;
+  }
+
+  setWholeNumber(num) {
+    this.wholeNumber = num;
+  }
+
+  setNumerator(num) {
+    this.numerator = num;
+  }
+
+  setDenominator(num) {
+    this.denominator = num;
+  }
+
+  getWholeNumber() {
+    return this.wholeNumber;
+  }
+
+  getNumerator() {
+    return this.numerator;
+  }
+
+  getDenominator() {
+    return this.denominator;
   }
 
   toString() {
-    if (this.numerator === this.denominator) {
+    this.reduceFraction();
+    if (this.denominator === 0) {
+      return 'undefined';
+    }
+    if (this.numerator === 0 || this.numerator === this.denominator) {
       return `${this.wholeNumber}`;
     } else {
       return `${this.wholeNumber}_${this.numerator}/${this.denominator}`;
@@ -17,33 +45,72 @@ export class Fraction {
   reduceFraction() {
     if (this.numerator > this.denominator) {
       this.wholeNumber += Number.parseInt(this.numerator / this.denominator);
-      this.numerator = this.numerator % this.denominator;
-    } else if (this.numerator < this.denominator) {
+      this.setNumerator(this.numerator % this.denominator);
+    } 
+    if (this.numerator < this.denominator) {
       // reduce num and den with smallest common factors: 2 and 3
       while (this.numerator % 2 === 0 && this.denominator % 2 === 0) {
-        this.numerator = this.numerator / 2;
-        this.denominator = this.denominator / 2;
+        this.setNumerator(this.numerator / 2);
+        this.setDenominator(this.denominator / 2);
       }
       while (this.numerator % 3 === 0 && this.denominator % 3 === 0) {
-        this.numerator = this.numerator / 3;
-        this.denominator = this.denominator / 3;
+        this.setNumerator(this.numerator / 3);
+        this.setDenominator(this.denominator / 3);
+      }
+    } 
+    else {
+      if (this.wholeNumber === 0 && this.denominator !== 0) {
+        this.setWholeNumber(1);
+        this.setNumerator(0);
+        this.setDenominator(1);
       }
     }
   }
 
-  static performOperation(fraction1, fraction2, operator) {}
+  static performOperation(fraction1, fraction2, operator) {
+    switch (operator) {
+      case '+':
+        debugger;
+        return this.add(fraction1, fraction2);
+        break;
+      case '+':
+        return this.subtract(fraction1, fraction2);
+        break;
+      case '+':
+        return this.multiply(fraction1, fraction2);
+        break;
+      case '+':
+        return this.divide(fraction1, fraction2);
+        break;
+      default:
+        return `Invalid operator ${operator}`;
+    }
+  }
 
-  static add(fraction1, fraction2) {}
+  static add(fraction1, fraction2) {
+    if (fraction1.getDenominator() !== fraction2.getDenominator()) {
+      fraction1.setNumerator(fraction1.getNumerator() * fraction2.getDenominator());
+      fraction2.setNumerator(fraction2.getNumerator() * fraction1.getDenominator());
+      fraction1.setDenominator(fraction1.getDenominator() * fraction2.getDenominator());
+    }
+    var wholeNumber = fraction1.getWholeNumber() + fraction2.getWholeNumber();
+    var numerator = fraction1.getNumerator() + fraction2.getNumerator();
+    var denominator = fraction1.getDenominator();
+    return new Fraction(wholeNumber, numerator, denominator);
 
-  static multiply(fraction1, fraction2) {}
+  }
+  
+  // static subtract(fraction1, fraction2) {}
 
-  static subtract(fraction1, fraction2) {}
+  // static multiply(fraction1, fraction2) {}
 
-  static divide(fraction1, fraction2) {}
+  // static divide(fraction1, fraction2) {}
 
-  static findCommonDenominator(fraction1, fraction2) {}
+  // static findCommonDenominator(fraction1, fraction2) {}
 
-  static toImproperFraction(fraction) {}
+  // static toImproperFraction(fraction) {}
 
-  static toMixedNumber(fraction) {}
+  // static toMixedNumber(fraction) {}
 }
+
+module.exports = Fraction;
