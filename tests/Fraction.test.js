@@ -110,7 +110,6 @@ describe('Multiply', () => {
 	test('Multiply with negative results', () => {
 		var fraction1 = new Fraction(2, 5, 3, true); // 11/3
 		var fraction2 = new Fraction(1, 5, 2); // 7/2
-		debugger;
 		var result = Fraction.performOperation(fraction1, fraction2, '*');
 	  expect(result.toString()).toBe('-12_5/6'); // 77/6
 	});
@@ -135,7 +134,6 @@ describe('Divide', () => {
 	test('Divide with negative results', () => {
 		var fraction1 = new Fraction(2, 5, 3, true); // 11/3
 		var fraction2 = new Fraction(1, 5, 2); // 7/2
-		debugger;
 		var result = Fraction.performOperation(fraction1, fraction2, '/');
 	  expect(result.toString()).toBe('-1_1/21');
 	});

@@ -54,6 +54,15 @@ class Fraction {
     }
   }
 
+  reduceFractionWithFactor(factor) {
+    if (factor !== 1) {
+      while (this.numerator % factor === 0 && this.denominator % factor === 0) {
+        this.setNumerator(this.numerator / factor);
+        this.setDenominator(this.denominator / factor);
+      }
+    }
+  }
+
   reduceFraction() {
     if (Math.abs(this.numerator) > Math.abs(this.denominator)) {
       this.wholeNumber += Number.parseInt(this.numerator / this.denominator);
@@ -61,36 +70,17 @@ class Fraction {
     } 
     if (Math.abs(this.numerator) < Math.abs(this.denominator)) {
       // reduce num and den with smallest common factors: 5, 3, and 2
-      while (this.numerator % 5 === 0 && this.denominator % 5 === 0) {
-        this.setNumerator(this.numerator / 5);
-        this.setDenominator(this.denominator / 5);
-      }
-      while (this.numerator % 3 === 0 && this.denominator % 3 === 0) {
-        this.setNumerator(this.numerator / 3);
-        this.setDenominator(this.denominator / 3);
-      }
-      while (this.numerator % 2 === 0 && this.denominator % 2 === 0) {
-        this.setNumerator(this.numerator / 2);
-        this.setDenominator(this.denominator / 2);
-      }
-      // reduce fraction by numerator
-      if (this.numerator % this.numerator === 0 && this.denominator % this.numerator === 0) {
-        this.setNumerator(this.numerator / this.numerator);
-        this.setDenominator(this.denominator / this.numerator);
-      }
+      this.reduceFractionWithFactor(5);
+      this.reduceFractionWithFactor(3);
+      this.reduceFractionWithFactor(2);
+      this.reduceFractionWithFactor(this.numerator);
     } 
     else {
-      // if (this.wholeNumber === 0 && this.denominator !== 0) {
-      //   this.setWholeNumber(1);
-      //   this.setNumerator(0);
-      //   this.setDenominator(0);
-      // } else {
-        this.setWholeNumber(this.getWholeNumber() + 1);
-        this.setNumerator(0);
-        this.setDenominator(1);
-      // }
+      this.setWholeNumber(this.getWholeNumber() + 1);
+      this.setNumerator(0);
+      this.setDenominator(1);
     }
-  }
+  }  
 
   static performOperation(fraction1, fraction2, operator) {
     switch (operator) {

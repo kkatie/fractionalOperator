@@ -4,8 +4,7 @@
   "description": "Perform operations between 2 fractions.",
   "main": "index.js",
   "scripts": {
-    "test": "jest --coverage",
-    "start": "node index.js"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
