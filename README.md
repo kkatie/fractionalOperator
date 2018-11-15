@@ -8,8 +8,11 @@ To run:
 
 To run tests:
 
+`npm install`
+
 `npm test`
 
-To run tests with debugger:
-`npm install`
+To run tests with debugger (e.g. open Chrome DevTools):
+
+
 `node --inspect-brk node_modules/.bin/jest --runInBand`
