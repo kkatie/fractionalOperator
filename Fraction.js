@@ -1,9 +1,10 @@
 class Fraction {
   // to-do: value/type check; error-handling
-  constructor(wholeNumber, numerator, denominator) {
-    this.wholeNumber = wholeNumber || 0;
-    this.numerator = numerator || 0;
-    this.denominator = denominator || 0;
+  constructor(wholeNumber, numerator, denominator, isNegative) {
+    this.wholeNumber = Number.parseInt(wholeNumber) || 0;
+    this.numerator = Number.parseInt(numerator) || 0;
+    this.denominator = Number.parseInt(denominator) || 0;
+    this.isNegative = isNegative || false;
   }
 
   setWholeNumber(num) {
@@ -30,50 +31,70 @@ class Fraction {
     return this.denominator;
   }
 
+  getIsNegative() {
+    return this.isNegative;
+  }
+
   toString() {
-    this.reduceFraction();
     if (this.denominator === 0) {
       return 'undefined';
     }
+    this.reduceFraction();
+    var sign = '';
+    if (this.isNegative) {
+      sign += '-';
+    }
     if (this.numerator === 0 || this.numerator === this.denominator) {
-      return `${this.wholeNumber}`;
+      return sign += `${this.wholeNumber}`;
     } else if (this.wholeNumber === 0) {
-      return `${this.numerator}/${this.denominator}`;
+      return sign += `${this.numerator}/${this.denominator}`;
     }
     else {
-      return `${this.wholeNumber}_${this.numerator}/${this.denominator}`;
+      return sign += `${this.wholeNumber}_${this.numerator}/${this.denominator}`;
     }
   }
 
   reduceFraction() {
-    if (this.numerator > this.denominator) {
+    if (Math.abs(this.numerator) > Math.abs(this.denominator)) {
       this.wholeNumber += Number.parseInt(this.numerator / this.denominator);
       this.setNumerator(this.numerator % this.denominator);
     } 
-    if (this.numerator < this.denominator) {
-      // reduce num and den with smallest common factors: 2 and 3
-      while (this.numerator % 2 === 0 && this.denominator % 2 === 0) {
-        this.setNumerator(this.numerator / 2);
-        this.setDenominator(this.denominator / 2);
+    if (Math.abs(this.numerator) < Math.abs(this.denominator)) {
+      // reduce num and den with smallest common factors: 5, 3, and 2
+      while (this.numerator % 5 === 0 && this.denominator % 5 === 0) {
+        this.setNumerator(this.numerator / 5);
+        this.setDenominator(this.denominator / 5);
       }
       while (this.numerator % 3 === 0 && this.denominator % 3 === 0) {
         this.setNumerator(this.numerator / 3);
         this.setDenominator(this.denominator / 3);
       }
+      while (this.numerator % 2 === 0 && this.denominator % 2 === 0) {
+        this.setNumerator(this.numerator / 2);
+        this.setDenominator(this.denominator / 2);
+      }
+      // reduce fraction by numerator
+      if (this.numerator % this.numerator === 0 && this.denominator % this.numerator === 0) {
+        this.setNumerator(this.numerator / this.numerator);
+        this.setDenominator(this.denominator / this.numerator);
+      }
     } 
     else {
-      if (this.wholeNumber === 0 && this.denominator !== 0) {
-        this.setWholeNumber(1);
+      // if (this.wholeNumber === 0 && this.denominator !== 0) {
+      //   this.setWholeNumber(1);
+      //   this.setNumerator(0);
+      //   this.setDenominator(0);
+      // } else {
+        this.setWholeNumber(this.getWholeNumber() + 1);
         this.setNumerator(0);
         this.setDenominator(1);
-      }
+      // }
     }
   }
 
   static performOperation(fraction1, fraction2, operator) {
     switch (operator) {
       case '+':
-        debugger;
         return this.add(fraction1, fraction2);
         break;
       case '-':
@@ -108,14 +129,22 @@ class Fraction {
   }
 
   static multiply(fraction1, fraction2) {
-    fraction1 = Fraction.toImproperFraction(fraction1);
-    fraction2 = Fraction.toImproperFraction(fraction2);
+    Fraction.toImproperFraction(fraction1);
+    Fraction.toImproperFraction(fraction2);
     var numerator = fraction1.getNumerator() * fraction2.getNumerator(),
-      denominator = fraction1.getDenominator() * fraction2.getDenominator();
-    return new Fraction();
+      denominator = fraction1.getDenominator() * fraction2.getDenominator(),
+      isNegative = this.resultIsNegative(fraction1, fraction2);
+    return new Fraction(0, numerator, denominator, isNegative);
   }
 
-  // static divide(fraction1, fraction2) {}
+  static divide(fraction1, fraction2) {
+    Fraction.toImproperFraction(fraction1);
+    Fraction.toImproperFraction(fraction2);
+    var numerator = fraction1.getNumerator() * fraction2.getDenominator(),
+      denominator = fraction1.getDenominator() * fraction2.getNumerator(),
+      isNegative = this.resultIsNegative(fraction1, fraction2);
+    return new Fraction(0, numerator, denominator, isNegative);
+  }
 
   static getCommonDenominator(fraction1, fraction2) {
     if (fraction1.getDenominator() !== fraction2.getDenominator()) {
@@ -125,9 +154,17 @@ class Fraction {
     }
   }
 
-  // static toImproperFraction(fraction) {}
+  static toImproperFraction(fraction) {
+    var wholeNumber = fraction.getWholeNumber(),
+      denominator = fraction.getDenominator(),
+      numerator = fraction.getNumerator();
+    fraction.setNumerator(Math.abs(wholeNumber * denominator) + Math.abs(numerator));
+    fraction.setWholeNumber(0);
+  }
 
-  // static toMixedNumber(fraction) {}
+  static resultIsNegative(fraction1, fraction2) {
+   return fraction1.getIsNegative() || fraction2.getIsNegative(); 
+  }
 }
 
 module.exports = Fraction;

@@ -92,7 +92,54 @@ describe('Subtract', () => {
 });
 
 
+describe('Multiply', () => {
+	test('Multiply with 0 whole number', () => {
+	var fraction1 = new Fraction(0, 7, 10);
+	var fraction2 = new Fraction(0, 5, 10);
+	var result = Fraction.performOperation(fraction1, fraction2, '*');
+  expect(result.toString()).toBe('7/20');
+});
 
+	test('Multiply with whole numbers', () => {
+		var fraction1 = new Fraction(2, 1, 2); // 5/2
+		var fraction2 = new Fraction(7, 5, 3); // 26/3
+		var result = Fraction.performOperation(fraction1, fraction2, '*');
+	  expect(result.toString()).toBe('21_2/3'); // 130/6
+	});
+
+	test('Multiply with negative results', () => {
+		var fraction1 = new Fraction(2, 5, 3, true); // 11/3
+		var fraction2 = new Fraction(1, 5, 2); // 7/2
+		debugger;
+		var result = Fraction.performOperation(fraction1, fraction2, '*');
+	  expect(result.toString()).toBe('-12_5/6'); // 77/6
+	});
+});
+
+
+describe('Divide', () => {
+	test('Divide with 0 whole number', () => {
+	var fraction1 = new Fraction(0, 7, 10);
+	var fraction2 = new Fraction(0, 5, 10);
+	var result = Fraction.performOperation(fraction1, fraction2, '/');
+  expect(result.toString()).toBe('1_2/5');
+});
+
+	test('Divide with whole numbers', () => {
+		var fraction1 = new Fraction(2, 1, 2); // 5/2
+		var fraction2 = new Fraction(7, 5, 3); // 26/3
+		var result = Fraction.performOperation(fraction1, fraction2, '/');
+	  expect(result.toString()).toBe('15/52');
+	});
+
+	test('Divide with negative results', () => {
+		var fraction1 = new Fraction(2, 5, 3, true); // 11/3
+		var fraction2 = new Fraction(1, 5, 2); // 7/2
+		debugger;
+		var result = Fraction.performOperation(fraction1, fraction2, '/');
+	  expect(result.toString()).toBe('-1_1/21');
+	});
+});
 
 
 

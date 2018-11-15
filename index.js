@@ -1,16 +1,13 @@
-const Fraction = require('./Fraction.js');
+const Fraction = require('./Fraction.js'),
+	fractionParser = require('./helpers/fractionParser');
 
-// parse operand string and return a Fraction object
-function convertOperandToFraction(operandString) {
-  // to-do: parse accordingly to get components
-  return new Fraction(wholeNumber, numerator, denominator);
+function fractionalOperator() {
+  var stringStatement = process.argv[2].split(" ");
+  	operand1 = fractionParser.extractFraction(stringStatement[0]),
+  	operand2 = fractionParser.extractFraction(stringStatement[2]),
+  	operator = stringStatement[1],
+  	result = Fraction.performOperation(operand1, operand2, operator);
+  	console.log(result.toString());
 }
 
-// to-do: error-handling/check value of components
-export function fractionalOperator(stringStatement) {
-  var components = stringStatement.split(' ');
-  var operand1 = convertOperandToFraction(components[0]);
-  var operand2 = convertOperandToFraction(components[1]);
-  var operator = components[2];
-  return Fraction.performOperation(operand1, operand2, operator);
-}
+fractionalOperator();
